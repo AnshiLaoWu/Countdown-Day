@@ -86,8 +86,34 @@ function save() {
   downloadLink.click();
 }
 
-function open() {
-  document.getElementById("open_file").click();
-}
+document.getElementById("open").onclick = function () {
+  if (confirm('确定打开文件吗？当前未保存的内容将全部丢失。')) {
+    document.getElementById("open_file").click();
+  }
+  return false;
+};
+document.getElementById('open_file').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            var text = e.target.result;
+            var word = text.split('\n');
+            if (word.length <= 4) {
+              title = word[0];
+              goal_year = parseInt(word[1]);
+              goal_month = parseInt(word[2]);
+              goal_date = parseInt(word[3]);
+              goal.setFullYear(goal_year, goal_month - 1, goal_date);
+              refresh();
+            } else {
+              alert('请选择一个.cdd格式的文件。');
+            }
+        };
+        reader.readAsText(file);
+    } else {
+        alert('请选择一个.cdd格式的文件。');
+    }
+});
 
 refresh();
