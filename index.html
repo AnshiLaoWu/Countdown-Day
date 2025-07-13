@@ -8,24 +8,21 @@
 <body>
     <div class="calendar" id="calendar">
         <div class="title" id="title">
-            <h2 class="title_text" id="title_text"></h2>
+            <h2 class="title_text">倒数日 Countdown Day</h2>
         </div>
         <div class="days">
-            <h1 class="number" id="number"></h1>
-            <h3 class="unit" id="unit">天</h3>
+            <h1 class="number">欢迎使用</h1><br>
+            <h1 class="unit">Welcome to use!</h1>
         </div>
         <div class="explain">
-            <p class="explain_text" id="explain_text"></p>
+            <p class="explain_text">俺是老吴制作 Produced by AnshiLaoWu</p>
         </div>
     </div>
     <div class="menu">
-        <button class="button" id="refresh" onclick="refresh();">刷新</button>
-        <button class="button" id="change" onclick="change();">更换</button>
-        <button class="button" id="format" onclick="format();">格式</button>
-        <button class="button" id="save" onclick="save();">保存</button>
-        <button class="button" id="open">打开</button>
+        <h2 class="choose_title">选择一个语言<br>Choose a language</h2>
+        <button class="button zh-cn" onclick="location.assign('./zh-cn/main.html');">简体中文</button>
+        <p></p>
+        <button class="button en-us" onclick="location.assign('./en-us/main.html');">English</button>
     </div>
-    <input type="file" id="open_file" style="display:none;"/>
-    <script type="text/javascript" src="./index.js"></script>
 </body>
 </html>

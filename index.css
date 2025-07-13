@@ -12,6 +12,7 @@ body{background-color:#fadd98;}
 .title{
     width:calc(100vw - 50px);
     height:150px;
+    background-color:#ff0000;
     border-top-left-radius:50px;
     border-top-right-radius:50px;
     position:absolute;
@@ -24,42 +25,62 @@ body{background-color:#fadd98;}
     font-size:72px;
 }
 .days{
-    line-height:450px;
     text-align:center;
     color:#000000;
     position:relative;
     top:150px;
 }
 .number,.unit{display:inline;}
-.unit{font-size:150px;}
+.number{
+    font-size:200px;
+    line-height:350px;
+}
+.unit{
+    font-size:100px;
+    line-height:110px;
+}
 .explain{
     text-align:center;
     position:relative;
-    bottom:-80px;
+    bottom:-190px;
 }
 .explain_text{
-    font-size:54px;
+    font-size:48px;
     color:#999999;
 }
 .menu{
-    width:800px;
+    width:calc(100vw - 200px);
     position:absolute;
     top:850px;
-    left:calc((100vw - 750px) / 2);
+    left:100px;
+    text-align:center;
+}
+.choose_title{
+    font-size:66px;
 }
 .button{
-    width:150px;
+    width:calc(100vw - 200px);
     height:100px;
-    background-color:#3498db;
-    color:#ffffff;
     font-size:48px;
-    border:0px;
     border-radius:100px;
 }
-.button:hover{
-    background-color:#2771a3;
+.zh-cn{
+    border:5px solid rgba(52,152,219,1);
+    background-color:rgba(52,152,219,0.3);
+    color:rgba(52,152,219,1);
 }
-.button:active{
-    background-color:#ffffff;
-    color:#3498db;
+.zh-cn:hover{
+    border:5px solid rgba(39,113,163,1);
+    background-color:rgba(39,113,163,0.3);
+    color:rgba(39,113,163,1);
+}
+.en-us{
+    border:5px solid rgba(34,177,76,1);
+    background-color:rgba(34,177,76,0.3);
+    color:rgba(34,177,76,1);
+}
+.en-us:hover{
+    border:5px solid rgba(28,145,62,1);
+    background-color:rgba(28,145,62,0.3);
+    color:rgba(28,145,62,1);
 }
