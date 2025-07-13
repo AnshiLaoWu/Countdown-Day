@@ -31,14 +31,35 @@ body{background-color:#fadd98;}
     top:150px;
 }
 .number,.unit{display:inline;}
-.number{font-size:300px;}
 .unit{font-size:150px;}
 .explain{
     text-align:center;
     position:relative;
-    bottom:-40px;
+    bottom:-80px;
 }
 .explain_text{
     font-size:54px;
     color:#999999;
+}
+.menu{
+    width:800px;
+    position:absolute;
+    top:850px;
+    left:calc((100vw - 750px) / 2);
+}
+.button{
+    width:150px;
+    height:100px;
+    background-color:#3498db;
+    color:#ffffff;
+    font-size:48px;
+    border:0px;
+    border-radius:100px;
+}
+.button:hover{
+    background-color:#2771a3;
+}
+.button:active{
+    background-color:#ffffff;
+    color:#3498db;
 }

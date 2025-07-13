@@ -6,18 +6,26 @@
     <title>倒数日 Countdown Day | 俺是老吴</title>
 </head>
 <body>
-    <div class="calendar">
+    <div class="calendar" id="calendar">
         <div class="title" id="title">
             <h2 class="title_text" id="title_text"></h2>
         </div>
         <div class="days">
             <h1 class="number" id="number"></h1>
-            <h3 class="unit">天</h3>
+            <h3 class="unit" id="unit">天</h3>
         </div>
         <div class="explain">
             <p class="explain_text" id="explain_text"></p>
         </div>
     </div>
+    <div class="menu">
+        <button class="button" id="refresh" onclick="refresh();">刷新</button>
+        <button class="button" id="change" onclick="change();">更换</button>
+        <button class="button" id="format" onclick="format();">格式</button>
+        <button class="button" id="save" onclick="save();">保存</button>
+        <button class="button" id="open" onclick="open();">打开</button>
+    </div>
+    <input type="file" id="open_file" style="display:none;"/>
     <script type="text/javascript" src="./index.js"></script>
 </body>
 </html>
