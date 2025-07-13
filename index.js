@@ -15,6 +15,13 @@ function font_size() {
 }
 
 function refresh() {
+  if (isNaN(goal_year) || isNaN(goal_month) || isNaN(goal_date)) {
+    alert('输入格式不合法！');
+    location.reload();
+  } else if (title.length > 10) {
+    alert('目标内容过长！');
+    location.reload();
+  }
   var now = new Date();
   var value = parseInt((goal - now) / 86400000);
   if (value > 0) {
