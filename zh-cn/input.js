@@ -49,11 +49,14 @@ document.getElementById('open_file').addEventListener('change', function(event) 
         reader.onload = function(e) {
             var text = e.target.result;
             var word = text.split('\n');
-            if (word.length <= 4) {
+            if (word.length <= 7) {
               title = word[0];
               goal_year = parseInt(word[1]);
               goal_month = parseInt(word[2]);
               goal_date = parseInt(word[3]);
+              goal_hour = (word.length > 4) ? parseInt(word[4]) : 0;
+              goal_minute = (word.length > 4) ? parseInt(word[5]) : 0;
+              goal_second = (word.length > 4) ? parseInt(word[6]) : 0;
               skip();
             } else {
               alert('请选择一个.cdd格式的文件。');

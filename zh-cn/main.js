@@ -4,8 +4,8 @@ var title = href.substr(href.indexOf('title=') + 6, href.indexOf('&year=') - hre
 var goal_year = parseInt(href.substr(href.indexOf('year=') + 5, href.indexOf('&month=') - href.indexOf('year=') - 5));
 var goal_month = parseInt(href.substr(href.indexOf('month=') + 6, href.indexOf('&date=') - href.indexOf('month=') - 6));
 var goal_date = parseInt(href.substr(href.indexOf('date=') + 5, href.indexOf('&hour=') - href.indexOf('date=') - 5));
-var goal_hour = parseInt(href.substr(href.indexOf('hour=') + 5, href.indexOf('&minute=') - href.indexOf('hour=') - 6));
-var goal_minute = parseInt(href.substr(href.indexOf('minute=') + 7, href.indexOf('&second=') - href.indexOf('minute=') - 8));
+var goal_hour = parseInt(href.substr(href.indexOf('hour=') + 5, href.indexOf('&minute=') - href.indexOf('hour=') - 5));
+var goal_minute = parseInt(href.substr(href.indexOf('minute=') + 7, href.indexOf('&second=') - href.indexOf('minute=') - 7));
 var goal_second = parseInt(href.substr(href.indexOf('second=') + 7));
 goal.setFullYear(goal_year, goal_month - 1, goal_date);
 goal.setHours(goal_hour, goal_minute, goal_second);
@@ -22,12 +22,12 @@ function refresh() {
   var now = new Date();
   var value = parseInt((goal - now) / 86400000);
   const days = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
-  if (value > 0) {
+  if (value > 0 || value == 0 && goal_date != now.getDate) {
     document.getElementById("title_text").innerHTML = title + ' 还有';
     document.getElementById("title").style.backgroundColor = "blue";
     document.getElementById("number").innerHTML = value;
     document.getElementById("explain_text").innerHTML = '目标日：' + goal_year + ' 年 ' + goal_month + ' 月 ' + goal_date + ' 日  ' + days[goal.getDay()];
-  } else if (value < 0) {
+  } else if (value < 0 || value == 0 && goal_date != now.getDate) {
     document.getElementById("title_text").innerHTML = title + ' 已经';
     document.getElementById("title").style.backgroundColor = "orange";
     document.getElementById("number").innerHTML = -value;
@@ -39,6 +39,7 @@ function refresh() {
     document.getElementById("explain_text").innerHTML = '目标日：' + goal_year + ' 年 ' + goal_month + ' 月 ' + goal_date + ' 日  ' + days[goal.getDay()];
   }
   document.getElementById("unit").innerHTML = '天';
+  document.getElementById("explain_text_time").innerHTML = String(goal_hour).padStart(2,'0') + ':' + String(goal_minute).padStart(2,'0') + ':' + String(goal_second).padStart(2,'0');
   count = 0;
   font_size();
 }
@@ -122,7 +123,7 @@ function format() {
 }
 
 function save() {
-  var text = title + '\n' + goal_year + '\n' + goal_month + '\n' + goal_date;
+  var text = title + '\n' + goal_year + '\n' + goal_month + '\n' + goal_date + '\n' + goal_hour + '\n' + goal_minute + '\n' + goal_second;
   var blob = new Blob([text], {type: 'text/plain'});
   var downloadLink = document.createElement('a');
   downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
