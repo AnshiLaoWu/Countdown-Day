@@ -2,9 +2,13 @@ var goal = new Date();
 var href = decodeURI(location.href);
 var title = href.substr(href.indexOf('title=') + 6, href.indexOf('&year=') - href.indexOf('title=') - 6);
 var goal_year = parseInt(href.substr(href.indexOf('year=') + 5, href.indexOf('&month=') - href.indexOf('year=') - 5));
-var goal_month = parseInt(href.substr(href.indexOf('month=') + 6, href.indexOf('&date=') - href.indexOf('month=') - 5));
-var goal_date = parseInt(href.substr(href.indexOf('date=') + 5));
+var goal_month = parseInt(href.substr(href.indexOf('month=') + 6, href.indexOf('&date=') - href.indexOf('month=') - 6));
+var goal_date = parseInt(href.substr(href.indexOf('date=') + 5, href.indexOf('&hour=') - href.indexOf('date=') - 5));
+var goal_hour = parseInt(href.substr(href.indexOf('hour=') + 5, href.indexOf('&minute=') - href.indexOf('hour=') - 6));
+var goal_minute = parseInt(href.substr(href.indexOf('minute=') + 7, href.indexOf('&second=') - href.indexOf('minute=') - 8));
+var goal_second = parseInt(href.substr(href.indexOf('second=') + 7));
 goal.setFullYear(goal_year, goal_month - 1, goal_date);
+goal.setHours(goal_hour, goal_minute, goal_second);
 var count = 0;
 
 function font_size() {
@@ -46,13 +50,34 @@ function change() {
   return false;
 }
 
-function format() {
-  count = (count + 1) % 4;
-  if (count == 0) {
+function refresh_second() {
+  var timer = window.setInterval(function() {
+    if(count != 4) window.clearInterval(timer);
     var now = new Date();
-    var value = parseInt((goal - now) / 86400000);
-    document.getElementById("number").innerHTML = (value >= 0) ? value : -value;
-    document.getElementById("unit").innerHTML = '天';
+    var value1 = parseInt((goal - now) / 86400000);
+    var value2 = parseInt(((goal - now) - value1 * 86400000) / 3600000);
+    var value3 = parseInt(((goal - now) - value1 * 86400000 - value2 * 3600000) / 60000);
+    var value4 = parseInt(((goal - now) - value1 * 86400000 - value2 * 3600000 - value3 * 60000) / 1000);
+    value1 = (value1 >= 0) ? value1 : -value1;
+    value2 = (value2 >= 0) ? value2 : -value2;
+    value3 = (value3 >= 0) ? value3 : -value3;
+    value4 = (value4 >= 0) ? value4 : -value4;
+    value2 = String(value2).padStart(2,'0');
+    value3 = String(value3).padStart(2,'0');
+    value4 = String(value4).padStart(2,'0');
+    document.getElementById("number").innerHTML = value1 + '天 ' + value2 + ':' + value3 + ':' + value4;
+  })
+}
+function format() {
+  count = (count + 1) % 5;
+  if (count == 0) {
+    setTimeout(() => {
+      var now = new Date();
+      var value = parseInt((goal - now) / 86400000);
+      document.getElementById("number").innerHTML = (value >= 0) ? value : -value;
+      document.getElementById("unit").innerHTML = '天';
+      font_size();
+    }, 500);    
   } else if (count == 1) {
     var now = new Date();
     var value1 = parseInt((goal - now) / 31536000000);
@@ -76,6 +101,22 @@ function format() {
     var value = parseInt((goal - now) / 604800000);
     document.getElementById("number").innerHTML = (value >= 0) ? value : -value;
     document.getElementById("unit").innerHTML = '周';
+  } else if (count == 4) {
+    var now = new Date();
+    var value1 = parseInt((goal - now) / 86400000);
+    var value2 = parseInt(((goal - now) - value1 * 86400000) / 3600000);
+    var value3 = parseInt(((goal - now) - value1 * 86400000 - value2 * 3600000) / 60000);
+    var value4 = parseInt(((goal - now) - value1 * 86400000 - value2 * 3600000 - value3 * 60000) / 1000);
+    value1 = (value1 >= 0) ? value1 : -value1;
+    value2 = (value2 >= 0) ? value2 : -value2;
+    value3 = (value3 >= 0) ? value3 : -value3;
+    value4 = (value4 >= 0) ? value4 : -value4;
+    value2 = String(value2).padStart(2,'0');
+    value3 = String(value3).padStart(2,'0');
+    value4 = String(value4).padStart(2,'0');
+    document.getElementById("number").innerHTML = value1 + '天 ' + value2 + ':' + value3 + ':' + value4;
+    document.getElementById("unit").innerHTML = '';
+    refresh_second();
   }
   font_size();
 }

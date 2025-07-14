@@ -2,17 +2,24 @@ var title;
 var goal_year;
 var goal_month;
 var goal_date;
+var goal_hour;
+var goal_minute;
+var goal_second;
 
 function skip(){
   if (!judge()) return false;
-  location.assign(encodeURI('./main.html?title=' + title + '&year=' + goal_year + '&month=' + goal_month + '&date=' + goal_date));
+  if (goal_hour == '') goal_hour = 0;
+  if (goal_minute == '') goal_minute = 0;
+  if (goal_second == '') goal_second = 0;
+  location.assign(encodeURI('./main.html?title=' + title + '&year=' + goal_year + '&month=' + goal_month + '&date=' + goal_date + '&hour=' + goal_hour + '&minute=' + goal_minute + '&second=' + goal_second));
 }
 
 function judge(){
   var goal = new Date();
   goal.setFullYear(goal_year, goal_month - 1, goal_date);
-  if (!(goal instanceof Date && !isNaN(goal.getTime())) || goal_year < 1 || goal_month < 1 || goal_date < 1 || goal_month > 12 || goal_date > 31) {
-    alert('日期格式不合法！');
+  goal.setHours(goal_hour, goal_minute, goal_second);
+  if (!(goal instanceof Date && !isNaN(goal.getTime())) || goal_year < 1 || goal_month < 1 || goal_date < 1 || goal_hour < 0 || goal_minute < 0 || goal_second < 0 || goal_month > 12 || goal_date > 31 || goal_hour > 23 || goal_minute > 59 || goal_second > 59) {
+    alert('时间日期格式不合法！');
     return false;
   } else if (title.length > 10) {
     alert('目标内容过长！');
@@ -26,6 +33,9 @@ function submit(){
   goal_year = document.getElementById("year").value;
   goal_month = document.getElementById("month").value;
   goal_date = document.getElementById("date").value;
+  goal_hour = document.getElementById("hour").value;
+  goal_minute = document.getElementById("minute").value;
+  goal_second = document.getElementById("second").value;
   skip();
 }
 
