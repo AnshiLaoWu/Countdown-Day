@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./input.css">
+    <title>倒数日 | 俺是老吴</title>
+</head>
+<body>
+    <h2 class="text_title">选择一种操作以开始</h2>
+    <input type="file" id="open_file" style="display:none;" />
+    <button class="button zh-cn" id="open" onclick="">从现有文件打开</button>
+    <h2 class="text_title">或</h2>
+    <button class="button en-us" onclick="submit();">从下面输入的内容开始</button>
+    <div class="input_box">
+        <span>目标内容：</span>
+        <input type="text" class="input" id="title" placeholder="例：Google成立" />
+        <p></p>
+        <span>目标年：</span>
+        <input type="text" class="input" id="year" placeholder="例：1998" />
+        <p></p>
+        <span>目标月：</span>
+        <input type="text" class="input" id="month" placeholder="例：10" />
+        <p></p>
+        <span>目标日：</span>
+        <input type="text" class="input" id="date" placeholder="例：4" />
+    </div>
+    <script type="text/javascript" src="./input.js"></script>
+</body>
+</html>

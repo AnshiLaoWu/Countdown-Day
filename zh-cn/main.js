@@ -1,10 +1,10 @@
 var goal = new Date();
-var title = prompt("请输入目标内容");
-var goal_year = prompt("请输入目标年",2025);
-var goal_month = prompt("请输入目标月",1);
-var goal_date = prompt("请输入目标日",1);
+var href = decodeURI(location.href);
+var title = href.substr(href.indexOf('title=') + 6, href.indexOf('&year=') - href.indexOf('title=') - 6);
+var goal_year = parseInt(href.substr(href.indexOf('year=') + 5, href.indexOf('&month=') - href.indexOf('year=') - 5));
+var goal_month = parseInt(href.substr(href.indexOf('month=') + 6, href.indexOf('&date=') - href.indexOf('month=') - 5));
+var goal_date = parseInt(href.substr(href.indexOf('date=') + 5));
 goal.setFullYear(goal_year, goal_month - 1, goal_date);
-
 var count = 0;
 
 function font_size() {
@@ -15,29 +15,25 @@ function font_size() {
 }
 
 function refresh() {
-  if (isNaN(goal_year) || isNaN(goal_month) || isNaN(goal_date)) {
-    alert('输入格式不合法！');
-    location.reload();
-  } else if (title.length > 10) {
-    alert('目标内容过长！');
-    location.reload();
-  }
   var now = new Date();
   var value = parseInt((goal - now) / 86400000);
+  const days = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
   if (value > 0) {
-    document.getElementById("title_text").innerHTML = title + ' 还剩';
+    document.getElementById("title_text").innerHTML = title + ' 还有';
     document.getElementById("title").style.backgroundColor = "blue";
     document.getElementById("number").innerHTML = value;
+    document.getElementById("explain_text").innerHTML = '目标日：' + goal_year + ' 年 ' + goal_month + ' 月 ' + goal_date + ' 日  ' + days[goal.getDay()];
   } else if (value < 0) {
     document.getElementById("title_text").innerHTML = title + ' 已经';
     document.getElementById("title").style.backgroundColor = "orange";
     document.getElementById("number").innerHTML = -value;
+    document.getElementById("explain_text").innerHTML = '起始日：' + goal_year + ' 年 ' + goal_month + ' 月 ' + goal_date + ' 日  ' + days[goal.getDay()];
   } else {
-    document.getElementById("title_text").innerHTML = '现在是 ' + title;
+    document.getElementById("title_text").innerHTML = title + ' 就是今天';
     document.getElementById("title").style.backgroundColor = "red";
     document.getElementById("number").innerHTML = value;
+    document.getElementById("explain_text").innerHTML = '目标日：' + goal_year + ' 年 ' + goal_month + ' 月 ' + goal_date + ' 日  ' + days[goal.getDay()];
   }
-  document.getElementById("explain_text").innerHTML = '目标日：' + goal_year + ' 年 ' + goal_month + ' 月 ' + goal_date + ' 日';
   document.getElementById("unit").innerHTML = '天';
   count = 0;
   font_size();
@@ -45,7 +41,7 @@ function refresh() {
 
 function change() {
   if (confirm('确定更换吗？当前未保存的内容将全部丢失。')) {
-    location.reload();
+    location.assign('./input.html');
   }
   return false;
 }
@@ -92,35 +88,5 @@ function save() {
   downloadLink.setAttribute('download', title + '.cdd');
   downloadLink.click();
 }
-
-document.getElementById("open").onclick = function () {
-  if (confirm('确定打开文件吗？当前未保存的内容将全部丢失。')) {
-    document.getElementById("open_file").click();
-  }
-  return false;
-};
-document.getElementById('open_file').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            var text = e.target.result;
-            var word = text.split('\n');
-            if (word.length <= 4) {
-              title = word[0];
-              goal_year = parseInt(word[1]);
-              goal_month = parseInt(word[2]);
-              goal_date = parseInt(word[3]);
-              goal.setFullYear(goal_year, goal_month - 1, goal_date);
-              refresh();
-            } else {
-              alert('请选择一个.cdd格式的文件。');
-            }
-        };
-        reader.readAsText(file);
-    } else {
-        alert('请选择一个.cdd格式的文件。');
-    }
-});
 
 refresh();

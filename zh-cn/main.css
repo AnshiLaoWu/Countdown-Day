@@ -45,7 +45,7 @@ body{background-color:#fadd98;}
     width:800px;
     position:absolute;
     top:850px;
-    left:calc((100vw - 750px) / 2);
+    left:calc((100vw - 600px) / 2);
 }
 .button{
     width:150px;
