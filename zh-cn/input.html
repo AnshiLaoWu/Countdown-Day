@@ -32,6 +32,17 @@
         <p></p>
         <span>目标秒：</span>
         <input type="text" class="input" id="second" placeholder="例：30，留空则按0计算" />
+        <p></p>
+        <input type="checkbox" id="if_repeat" style="width:50px;height:50px;" />
+        <span>每</span>
+        <input type="text" class="input" id="repeat_time" value="0" style="width:200px;" />
+        <select id="repeat_unit" style="width:150px;height:60px;border:0px;border-radius:60px;font-size:30px;">
+            <option value="day">天</option>
+            <option value="week">周</option>
+            <option value="month">月</option>
+            <option value="year">年</option>
+        </select>
+        <span>重复</span>
     </div>
     <script type="text/javascript" src="./input.js"></script>
 </body>

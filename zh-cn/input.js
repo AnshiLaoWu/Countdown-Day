@@ -5,13 +5,15 @@ var goal_date;
 var goal_hour;
 var goal_minute;
 var goal_second;
+var repeat_time;
+var repeat_unit;
 
 function skip(){
   if (!judge()) return false;
   if (goal_hour == '') goal_hour = 0;
   if (goal_minute == '') goal_minute = 0;
   if (goal_second == '') goal_second = 0;
-  location.assign(encodeURI('./main.html?title=' + title + '&year=' + goal_year + '&month=' + goal_month + '&date=' + goal_date + '&hour=' + goal_hour + '&minute=' + goal_minute + '&second=' + goal_second));
+  location.assign(encodeURI('./main.html?title=' + title + '&year=' + goal_year + '&month=' + goal_month + '&date=' + goal_date + '&hour=' + goal_hour + '&minute=' + goal_minute + '&second=' + goal_second + '&repeat_time=' + repeat_time + '&repeat_unit=' + repeat_unit));
 }
 
 function judge(){
@@ -23,6 +25,9 @@ function judge(){
     return false;
   } else if (title.length > 10) {
     alert('目标内容过长！');
+    return false;
+  } else if (isNaN(repeat_time)) {
+    alert('重复格式错误！');
     return false;
   }
   return true;
@@ -36,6 +41,12 @@ function submit(){
   goal_hour = document.getElementById("hour").value;
   goal_minute = document.getElementById("minute").value;
   goal_second = document.getElementById("second").value;
+  if (document.getElementById("if_repeat").checked) {
+    repeat_time = document.getElementById("repeat_time").value;
+    repeat_unit = document.getElementById("repeat_unit").value;
+  } else {
+    repeat_time = repeat_unit = 0;
+  }
   skip();
 }
 
@@ -66,4 +77,17 @@ document.getElementById('open_file').addEventListener('change', function(event) 
     } else {
         alert('请选择一个.cdd格式的文件。');
     }
+});
+
+document.getElementById('if_repeat').checked = false;
+document.getElementById('repeat_time').disabled = true;
+document.getElementById('repeat_unit').disabled = true;
+document.getElementById('if_repeat').addEventListener('click', function() {
+  if (this.checked == false) {
+    document.getElementById('repeat_time').disabled = true;
+    document.getElementById('repeat_unit').disabled = true;
+  } else {
+    document.getElementById('repeat_time').disabled = false;
+    document.getElementById('repeat_unit').disabled = false;
+  }
 });

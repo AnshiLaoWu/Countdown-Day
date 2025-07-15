@@ -1,3 +1,4 @@
+// 解析URL
 var goal = new Date();
 var href = decodeURI(location.href);
 var title = href.substr(href.indexOf('title=') + 6, href.indexOf('&year=') - href.indexOf('title=') - 6);
@@ -6,11 +7,14 @@ var goal_month = parseInt(href.substr(href.indexOf('month=') + 6, href.indexOf('
 var goal_date = parseInt(href.substr(href.indexOf('date=') + 5, href.indexOf('&hour=') - href.indexOf('date=') - 5));
 var goal_hour = parseInt(href.substr(href.indexOf('hour=') + 5, href.indexOf('&minute=') - href.indexOf('hour=') - 5));
 var goal_minute = parseInt(href.substr(href.indexOf('minute=') + 7, href.indexOf('&second=') - href.indexOf('minute=') - 7));
-var goal_second = parseInt(href.substr(href.indexOf('second=') + 7));
+var goal_second = parseInt(href.substr(href.indexOf('second=') + 7, href.indexOf('&repeat_time=') - href.indexOf('minute=') - 7));
+var repeat_time = parseInt(href.substr(href.indexOf('repeat_time=') + 12, href.indexOf('&repeat_unit=') - href.indexOf('repeat_time=') - 12));
+var repeat_unit = href.substr(href.indexOf('repeat_unit=') + 12);
 goal.setFullYear(goal_year, goal_month - 1, goal_date);
 goal.setHours(goal_hour, goal_minute, goal_second);
 var count = 0;
 
+// 自动设置字体大小
 function font_size() {
   var width = document.getElementById("calendar").offsetWidth;
   var num = document.getElementById("number").innerText.length;
@@ -18,8 +22,27 @@ function font_size() {
   document.getElementById("number").style.fontSize = size + 'px';
 }
 
+// 刷新时间
 function refresh() {
   var now = new Date();
+  if (goal_year == now.getFullYear() && goal_month == now.getMonth() + 1 && goal_date == now.getDate());
+  else if (repeat_unit == 'year') {
+    for (; goal < now; goal_year += repeat_time) goal.setFullYear(goal_year, goal_month - 1, goal_date);
+    goal_year -= repeat_time;
+    goal.setFullYear(goal_year, goal_month - 1, goal_date);
+  } else if (repeat_unit == 'month') {
+    for (; goal < now; goal_month += repeat_time) goal.setFullYear(goal_year, goal_month - 1, goal_date);
+    goal_month -= repeat_time;
+    goal.setFullYear(goal_year, goal_month - 1, goal_date);
+  } else if (repeat_unit == 'week') {
+    for (; goal < now; goal_date += repeat_time * 7) goal.setFullYear(goal_year, goal_month - 1, goal_date);
+    goal_date -= repeat_time * 7;
+    goal.setFullYear(goal_year, goal_month - 1, goal_date);
+  } else if (repeat_unit == 'day') {
+    for (; goal < now; goal_date += repeat_time) goal.setFullYear(goal_year, goal_month - 1, goal_date);
+    goal_date -= repeat_time;
+    goal.setFullYear(goal_year, goal_month - 1, goal_date);
+  }
   var value = parseInt((goal - now) / 86400000);
   const days = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
   if (value > 0 || value == 0 && goal_date != now.getDate) {
@@ -44,6 +67,7 @@ function refresh() {
   font_size();
 }
 
+// 返回输入页面
 function change() {
   if (confirm('确定更换吗？当前未保存的内容将全部丢失。')) {
     location.assign('./input.html');
@@ -51,6 +75,7 @@ function change() {
   return false;
 }
 
+// 更新具体时间
 function refresh_second() {
   var timer = window.setInterval(function() {
     if(count != 4) window.clearInterval(timer);
@@ -69,6 +94,7 @@ function refresh_second() {
     document.getElementById("number").innerHTML = value1 + '天 ' + value2 + ':' + value3 + ':' + value4;
   })
 }
+// 更换格式
 function format() {
   count = (count + 1) % 5;
   if (count == 0) {
@@ -82,7 +108,7 @@ function format() {
   } else if (count == 1) {
     var now = new Date();
     var value1 = parseInt((goal - now) / 31536000000);
-    var value2 = parseInt((goal - now) / 86400000 % 2592000000 / 30);
+    var value2 = parseInt(((goal - now) / 86400000 - value1 * 365) / 30);
     var value3 = parseInt((goal - now) / 86400000 - value1 * 365 - value2 * 30);
     value1 = (value1 >= 0) ? value1 : -value1;
     value2 = (value2 >= 0) ? value2 : -value2;
@@ -122,6 +148,7 @@ function format() {
   font_size();
 }
 
+// 保存到文件
 function save() {
   var text = title + '\n' + goal_year + '\n' + goal_month + '\n' + goal_date + '\n' + goal_hour + '\n' + goal_minute + '\n' + goal_second;
   var blob = new Blob([text], {type: 'text/plain'});
