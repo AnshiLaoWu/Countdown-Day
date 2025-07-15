@@ -45,12 +45,12 @@ function refresh() {
   }
   var value = parseInt((goal - now) / 86400000);
   const days = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
-  if (value > 0 || value == 0 && goal_date != now.getDate) {
+  if (value > 0 || value == 0 && goal_date != now.getDate()) {
     document.getElementById("title_text").innerHTML = title + ' 还有';
     document.getElementById("title").style.backgroundColor = "blue";
     document.getElementById("number").innerHTML = value;
     document.getElementById("explain_text").innerHTML = '目标日：' + goal_year + ' 年 ' + goal_month + ' 月 ' + goal_date + ' 日  ' + days[goal.getDay()];
-  } else if (value < 0 || value == 0 && goal_date != now.getDate) {
+  } else if (value < 0 || value == 0 && goal_date != now.getDate()) {
     document.getElementById("title_text").innerHTML = title + ' 已经';
     document.getElementById("title").style.backgroundColor = "orange";
     document.getElementById("number").innerHTML = -value;
@@ -150,7 +150,7 @@ function format() {
 
 // 保存到文件
 function save() {
-  var text = title + '\n' + goal_year + '\n' + goal_month + '\n' + goal_date + '\n' + goal_hour + '\n' + goal_minute + '\n' + goal_second;
+  var text = title + '\n' + goal_year + '\n' + goal_month + '\n' + goal_date + '\n' + goal_hour + '\n' + goal_minute + '\n' + goal_second + '\n' + repeat_time + '\n' + repeat_unit;
   var blob = new Blob([text], {type: 'text/plain'});
   var downloadLink = document.createElement('a');
   downloadLink.setAttribute('href', window.URL.createObjectURL(blob));

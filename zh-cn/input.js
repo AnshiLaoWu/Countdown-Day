@@ -60,7 +60,7 @@ document.getElementById('open_file').addEventListener('change', function(event) 
         reader.onload = function(e) {
             var text = e.target.result;
             var word = text.split('\n');
-            if (word.length <= 7) {
+            if (word.length <= 9) {
               title = word[0];
               goal_year = parseInt(word[1]);
               goal_month = parseInt(word[2]);
@@ -68,6 +68,8 @@ document.getElementById('open_file').addEventListener('change', function(event) 
               goal_hour = (word.length > 4) ? parseInt(word[4]) : 0;
               goal_minute = (word.length > 4) ? parseInt(word[5]) : 0;
               goal_second = (word.length > 4) ? parseInt(word[6]) : 0;
+              repeat_time = (word.length > 7) ? parseInt(word[7]) : 0;
+              repeat_unit = (word.length > 7) ? parseInt(word[8]) : 0;
               skip();
             } else {
               alert('请选择一个.cdd格式的文件。');
