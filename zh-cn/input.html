@@ -15,11 +15,17 @@
         <span>目标内容：</span>
         <input type="text" class="input" id="title" placeholder="例：Google成立" />
         <p></p>
+        <span>日期类型：</span>
+        <input type="radio" class="radio" name="type" id="solar" checked />
+        <span>公历&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <input type="radio" class="radio" name="type" id="lunar" />
+        <span>农历</span>
+        <p></p>
         <span>目标年：</span>
         <input type="text" class="input" id="year" placeholder="例：1998" />
         <p></p>
         <span>目标月：</span>
-        <input type="text" class="input" id="month" placeholder="例：10" />
+        <input type="text" class="input" id="month" placeholder="例：10，若当年有闰月则向后顺延" />
         <p></p>
         <span>目标日：</span>
         <input type="text" class="input" id="date" placeholder="例：4" />
@@ -43,6 +49,21 @@
             <option value="year">年</option>
         </select>
         <span>重复</span>
+        <p></p>
+        <input type="checkbox" id="if_add" style="width:50px;height:50px;" />
+        <span>正数包含起始日</span>
+        <p></p>
+        <input type="checkbox" id="if_end" style="width:50px;height:50px;" />
+        <span>结束时间</span>
+        <p></p>
+        <span>结束年：</span>
+        <input type="text" class="input" id="end_year" />
+        <p></p>
+        <span>结束月：</span>
+        <input type="text" class="input" id="end_month" />
+        <p></p>
+        <span>结束日：</span>
+        <input type="text" class="input" id="end_date" />
     </div>
     <script type="text/javascript" src="./input.js"></script>
 </body>
